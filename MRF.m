@@ -49,16 +49,16 @@ y = [1:4];
 [X,Y] = meshgrid(x,y);
 Z= [reshape(bel(:,2),3,3) zeros(3,1);
     zeros(1,4)];
-set(1,'renderer','zbuffer');  % appears to work better for recording movie
-    vidObj = VideoWriter('APsim','MPEG-4');
-     set(vidObj, 'FrameRate', 3); %min(5, 1/pauseLen)
-    open(vidObj);
+% set(1,'renderer','zbuffer');  % appears to work better for recording movie
+%     vidObj = VideoWriter('APsim','MPEG-4');
+%      set(vidObj, 'FrameRate', 3); %min(5, 1/pauseLen)
+%     open(vidObj);
 figure(1)
 colormap('parula(10)');
 h=pcolor(X,Y,Z);
 set(gca,'clim',[0 1]);
 currFrame = getframe(gca);
-writeVideo(vidObj,currFrame);
+% writeVideo(vidObj,currFrame);
 
 %loop
 for iter=1:20 %edgeStruct.maxIter
@@ -123,6 +123,8 @@ for iter=1:20 %edgeStruct.maxIter
       %Normalize belief
       bel(s,:)=bel(s,:)/sum_a(bel(s,:)');
       
+      
+      
       product(s)= bel(s,1)*bel(s,2);
   end
   %visualize
@@ -133,7 +135,7 @@ set(h,'xdata',X,'ydata',Y,'cdata',Z);
 axis ij
 title(['Iteration :',num2str(iter)]);
 currFrame = getframe(gca);
-writeVideo(vidObj,currFrame);
+% writeVideo(vidObj,currFrame);
 pause(1);
 
 if (length(find(product))==0)
@@ -144,6 +146,6 @@ end
 po=0;
   
 end
-close(vidObj);
+% close(vidObj);
         vidObj = [];
 
